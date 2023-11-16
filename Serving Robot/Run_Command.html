@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Run Command</title>
+</head>
+<body>
+  <h1>Click the button to run a command</h1>
+  <button id="runButton1">RTB</button>
+  <button id="runButton2">Move to Table 1</button>
+  <button id="runButton3">Move to Table 2</button>
+  <button id="runButton4">Move to Table 3</button>
+  <script>
+    const runButton0 = document.getElementById('runButton1');
+    const runButton1 = document.getElementById('runButton2');
+    const runButton2 = document.getElementById('runButton3');
+    const runButton3 = document.getElementById('runButton4');
+
+    runButton0.addEventListener('click', () => {
+      fetch('/run-command0', {
+        method: 'GET',
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          alert(data); // 명령 실행 결과를 표시
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+    runButton1.addEventListener('click', () => {
+      fetch('/run-command1', {
+        method: 'GET',
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          alert(data); // 명령 실행 결과를 표시
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+
+    runButton2.addEventListener('click', () => {
+      fetch('/run-command2', {
+        method: 'GET',
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          alert(data); // 명령 실행 결과를 표시
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+
+    runButton3.addEventListener('click', () => {
+      fetch('/run-command3', {
+        method: 'GET',
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          alert(data); // 명령 실행 결과를 표시
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+
+  </script>
+</body>
+</html>
+

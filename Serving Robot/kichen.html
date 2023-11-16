@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>주문 확인 페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin: 20px 0;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        table, th, td {
+            border: 1px solid #333;
+        }
+        th, td {
+            padding: 10px;
+        }
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        a {
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        a:hover {
+            background-color: #444;
+        }
+        .prompt-info {
+            margin: 20px;
+            color: #333;
+            font-size: 16px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h1>주문 확인 페이지</h1>
+    <div class="prompt-info" id="promptInfo">아래 표에 주문목록이 표시됩니다!</div>
+    <!-- 리턴 메시지를 나타내는 div -->
+    <div class="return-message" id="returnMessage">주문목록이 삭제되면 베이스캠프로 서빙봇을 옮기세요!</div>
+    <div id="returnMessage"></div>
+    <table id="orderTable">
+        <tr>
+            <th>음식</th>
+            <th>수량</th>
+        </tr>
+    </table>
+
+    <script>
+        function fetchOrderData() {
+            fetch('/getOrderData')
+                .then(response => response.json())
+                .then(data => {
+                    orderData = data;  
+                    updateOrderTable();
+                })
+                .catch(error => {
+                    console.error('Failed to fetch order data:', error);
+                });
+        }
+
+        // 초기 페이지 로드 시 주문 내역을 업데이트합니다.
+        fetchOrderData();
+
+
+        // 프롬프트 정보를 업데이트하는 함수
+        function updatePromptInfo(message) {
+            const promptInfo = document.getElementById("promptInfo");
+            promptInfo.innerText = message;
+        }
+
+        function updateOrderTable() {
+            const orderTable = document.getElementById("orderTable");
+            orderTable.innerHTML = `
+                <tr>
+                    <th>주문번호</th>
+                    <th>수량</th>
+                </tr>
+
+            `;
+
+            for (const item in orderData) {  
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${item}</td>
+                    <td>${typeof orderData[item] === 'object' ? JSON.stringify(orderData[item]) : orderData[item]}</td> 
+                `;
+                orderTable.appendChild(row);
+            }
+        }
+
+        function returnToBase() {
+        fetch('/returnToMenu', { method: 'POST' })
+            .then(response => response.text())
+            .then(message => {
+                console.log('Return message from server:', message);
+                if (message === "return") {
+                    updatePromptInfo("리턴!");
+                    fetchOrderData();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        // 추가: returnToBase 함수 호출 시 checkReturnMessage 함수 호출
+        checkReturnMessage();
+    }
+
+    function checkReturnMessage() {
+        fetch('/checkReturnMessage')
+            .then(response => response.text())
+            .then(message => {
+                console.log('Additional message from server:', message);
+                // 필요한 작업을 수행하세요.
+            })
+            .catch(error => {
+                console.error('Error checking return message:', error);
+            });
+    }
+
+    // 주문 내역을 주기적으로 업데이트하는 함수
+    function autoUpdateOrderData() {
+        setInterval(() => {
+            fetchOrderData();
+            checkReturnMessage(); // 이 부분을 추가함
+        }, 100); // 100밀리초(0.1초) 간격으로 주문 내역 업데이트
+    }
+
+    // 프롬프트 정보를 업데이트하는 함수
+    function updatePromptInfo(message) {
+        const promptInfo = document.getElementById("promptInfo");
+        promptInfo.innerText = message;
+    }
+
+    // 프롬프트 정보를 주기적으로 업데이트하는 함수
+    function autoUpdatePromptInfo() {
+        setInterval(() => {
+            checkReturnMessage();
+        }, 100); // 100밀리초(0.1초) 간격으로 프롬프트 정보 업데이트
+    }
+
+    // 초기 페이지 로드 시 주문 내역과 프롬프트 정보를 업데이트하고 주기적 업데이트 시작
+    fetchOrderData();
+    autoUpdateOrderData();
+    autoUpdatePromptInfo();
+
+    function returnToBase() {
+    // 새로운 div 엘리먼트 생성
+    const returnMessageDiv = document.createElement("div");
+    returnMessageDiv.id = "returnMessage";
+    
+    fetch('/returnToMenu', { method: 'POST' })
+        .then(response => response.text())
+        .then(message => {
+            console.log('Return message from server:', message);
+            if (message === "Return!") {
+                // 메시지를 새로 생성한 div에 추가
+                returnMessageDiv.innerText = "리턴!";
+                // body의 첫 번째 자식으로 삽입
+                document.body.insertBefore(returnMessageDiv, document.body.firstChild);
+                fetchOrderData();
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    </script>
+</body>
+</html>

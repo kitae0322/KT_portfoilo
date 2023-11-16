@@ -1,0 +1,271 @@
+<html>
+<head>
+    <title>Project_C menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("https://cdn.pixabay.com/photo/2015/12/01/15/43/black-1072366_1280.jpg");
+            background-size: cover;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #fff;
+            font-size: 36px;
+            margin: 20px 0;
+        }
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .menu-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 300px;
+            transition: transform 0.2s;
+        }
+        .menu-item img {
+            max-width: 100%;
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+        .menu-item:hover {
+            transform: scale(1.05);
+        }
+        .menu-item h2 {
+            margin: 10px 0;
+            color: #333;
+            font-size: 24px;
+        }
+        .add-to-cart-button {
+            background-color: #ff5733;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            margin: 10px auto;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .add-to-cart-button:hover {
+            background-color: #ff4500;
+            transform: scale(0.95);
+        }
+        .cart-button {
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .cart-button:hover {
+            background-color: #29cc68;
+            transform: scale(0.95);
+        }
+        .cart {
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .cart:hover {
+            background-color: #29cc68;
+            transform: scale(0.95);
+        }
+        .cart-container {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        .cart-title {
+            font-size: 24px;
+            color: #333;
+        }
+        .cart-items {
+            list-style: none;
+            padding: 0;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .order-now-button {
+            background-color: #ff5733;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .order-now-button:hover {
+            background-color: #ff4500;
+            transform: scale(0.95);
+        }
+        .cancel-button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .cancel-button:hover {
+            background-color: #e74436;
+            transform: scale(0.95);
+        }
+        .return-button {
+        background-color: #3498db; /* 배경색 */
+        color: #fff; /* 텍스트 색상 */
+        border: none;
+        border-radius: 5px;
+        padding: 8px 16px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .return-button:hover {
+        background-color: #2980b9; /* 마우스 호버 시 배경색 변경 */
+        transform: scale(0.95);
+    }
+    </style>
+</head>
+<body>
+    <h1>Project C MENU</h1>
+    <div class="menu-container">
+        <div class="menu-item">
+            <img src="https://cdn.pixabay.com/photo/2022/12/29/01/19/image-7684006_1280.jpg" alt="Chicken Image">
+            <h2>Chicken</h2>
+            <button class="add-to-cart-button" onclick="addToCart('Chicken')">Add to Cart</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://cdn.pixabay.com/photo/2020/03/21/11/17/burger-4953465_1280.jpg" alt="Hamburger Image">
+            <h2>Hamburger</h2>
+            <button class="add-to-cart-button" onclick="addToCart('Hamburger')">Add to Cart</button>
+        </div>
+        <div class="menu-item">
+            <img src="https://cdn.pixabay.com/photo/2020/05/17/04/22/pizza-5179939_1280.jpg" alt="Pizza Image">
+            <h2>Pizza</h2>
+            <button class="add-to-cart-button" onclick="addToCart('Pizza')">Add to Cart</button>
+        </div>
+    </div>
+    <div class="cart-container" id="cartContainer">
+        <h2 class="cart-title">Cart</h2>
+        <ul class="cart-items" id="cartItems"></ul>
+        <button class="order-now-button" id="orderNowButton" onclick="placeOrder()">Order Now</button>
+    </div>
+    <button class="return-button" onclick="returnToMenu()">Return to Base</button>
+    <script>
+        const cart = {};
+    
+        function addToCart(item) {
+            if (cart[item]) {
+                cart[item]++;
+            } else {
+                cart[item] = 1;
+            }
+            viewCart();
+        }
+    
+        function viewCart() {
+            const cartContainer = document.getElementById("cartContainer");
+            const cartItems = document.getElementById("cartItems");
+            const orderNowButton = document.getElementById("orderNowButton");
+    
+            if (Object.keys(cart).length === 0) {
+                cartContainer.style.display = "none";
+            } else {
+                cartContainer.style.display = "block";
+                let cartContent = "";
+    
+                for (const item in cart) {
+                    cartContent += `<li class="cart-item">${item}<span>x${cart[item]}</span><button class="cancel-button" onclick="cancelItem('${item}')">Cancel</button></li>`;
+                }
+    
+                cartItems.innerHTML = cartContent;
+    
+                if (orderNowButton) {
+                    orderNowButton.style.display = "block";
+                }
+            }
+        }
+    
+        function cancelItem(item) {
+            if (cart[item] > 1) {
+                cart[item]--;
+            } else {
+                delete cart[item];
+            }
+            viewCart();
+        }
+    
+        function placeOrder() {
+    // 주문 정보를 객체로 만들고 JSON 문자열로 변환
+    const orderData = { order: cart };
+    const orderJSON = JSON.stringify(orderData);
+
+    // AJAX를 사용하여 Node.js 서버에 주문 정보 전달
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/placeOrder', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(orderJSON);
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            // 주문 완료 후 주문 내역을 업데이트하지 않고 서버에서 새 주문 내역을 가져옵니다.
+            fetchOrderData();
+        } else {
+            alert("Failed to place the order.");
+        }
+    };
+}
+
+
+function returnToMenu() {
+    // Return to Base 버튼을 누를 때 메시지를 프롬프트로 출력
+    const confirmation = confirm("Do you want to return to base");
+    if (confirmation) {
+        // 서버로 "returnToMenu" 요청을 보내어 서버에게 "return" 메시지를 요청하도록 함
+        fetch('/returnToMenu', { method: 'POST' })
+          .then(response => {
+            if (response.status === 200) {
+              console.log('Return message sent to server');
+            } 
+          });
+    }
+}
+    </script>
+    
+</body>
+</html>

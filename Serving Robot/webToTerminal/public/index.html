@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Run Command</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background: url('https://cdn.pixabay.com/photo/2017/05/08/08/58/wallpaper-2294845_1280.png') center/cover no-repeat fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    h1 {
+      color: #383636;
+      font-size: 50px;
+      margin: 30px 0;
+    }
+
+    button {
+      background-color: #cea5e9dc;
+      color: #fff;
+      border: none;
+      padding: 20px;
+      font-size: 24px;
+      margin: 15px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s, transform 0.2s;
+      width: 200px; /* 고정된 너비 추가 */
+    }
+
+    button:hover {
+      background-color: #2980b9;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      button {
+        padding: 15px;
+        font-size: 18px;
+        margin: 10px;
+        width: 150px; /* 작은 화면에서의 버튼 너비 조정 */
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Click the button to run a command</h1>
+  <button id="runButton0">RTB</button>
+  <button id="runButton1">Move to Table 1</button>
+  <button id="runButton2">Move to Table 2</button>
+  <button id="runButton3">Move to Table 3</button>
+  <script>
+    const runButton0 = document.getElementById('runButton1');
+    const runButton1 = document.getElementById('runButton2');
+    const runButton2 = document.getElementById('runButton3');
+    const runButton3 = document.getElementById('runButton4');
+
+    runButton0.addEventListener('click', () => {
+      fetch('/run-command0', {
+        method: 'GET',
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          alert(data); // 명령 실행 결과를 표시
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+    runButton1.addEventListener('click', () => {
+      fetch('/run-command1', {
+        method: 'GET',
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          alert(data); // 명령 실행 결과를 표시
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+
+    runButton2.addEventListener('click', () => {
+      fetch('/run-command2', {
+        method: 'GET',
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          alert(data); // 명령 실행 결과를 표시
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+
+    runButton3.addEventListener('click', () => {
+      fetch('/run-command3', {
+        method: 'GET',
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          alert(data); // 명령 실행 결과를 표시
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    });
+
+  </script>
+</body>
+</html>
+
